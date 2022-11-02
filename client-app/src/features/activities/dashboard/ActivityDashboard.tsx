@@ -9,6 +9,7 @@ interface Props {
     activities: Activity[],
     selectedActivity: Activity | undefined,
     editMode: boolean,
+    submitting: boolean,
     handleSelectActivity: (id: string) => void,
     handleCancelSelectActivity: () => void,
     handleEditMode: (id: string) => void,
@@ -16,11 +17,11 @@ interface Props {
     creatOrEdit: (activity: Activity) => void,
     deleteActivity: (id: string) => void
 }
-export default function ActivityDashBoard({activities, selectedActivity, editMode, handleSelectActivity, handleCancelSelectActivity, handleEditMode, handleCancelEditMode, creatOrEdit, deleteActivity} : Props){
+export default function ActivityDashBoard({activities, selectedActivity, editMode, submitting, handleSelectActivity, handleCancelSelectActivity, handleEditMode, handleCancelEditMode, creatOrEdit, deleteActivity} : Props){
     return (
         <Grid>
             <Grid.Column width='10'>
-                <ActivityList activities={activities} handleSelectActivity={handleSelectActivity} deleteActivity={deleteActivity} />
+                <ActivityList activities={activities} submitting={submitting} handleSelectActivity={handleSelectActivity} deleteActivity={deleteActivity} />
             </Grid.Column>
             <Grid.Column width='6'>
                 {selectedActivity && !editMode &&
@@ -31,7 +32,7 @@ export default function ActivityDashBoard({activities, selectedActivity, editMod
                     /> 
                 }
                 {editMode &&
-                    <ActivityForm activity={selectedActivity} handleCancelEditMode={handleCancelEditMode} creatOrEdit={creatOrEdit}/>
+                    <ActivityForm activity={selectedActivity} submitting={submitting} handleCancelEditMode={handleCancelEditMode} creatOrEdit={creatOrEdit}/>
                 }
             </Grid.Column>
         </Grid>
